@@ -13,3 +13,8 @@ export enum BooleanString {
   yes = "YES",
   no = "FALSE"
 }
+
+export enum Link {
+  internal = "internal",
+  external = "external",
+}
