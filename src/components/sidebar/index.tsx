@@ -1,7 +1,17 @@
-import React from 'react';
-import { getTranslation } from '@/locales';
-import styles from './Sidebar.module.css';
+"use client"
+import { useEffect, useState } from 'react'
+import { getTranslation } from '@/localization'
+import { LanguageCode, Namespaces } from '@/localization/enum'
 import { ISiteContext } from "@/interfaces";
+
+export interface ISidebarData {
+  menuItems: {
+    home: string
+    about: string
+    blog: string
+    contact: string
+  }
+}
 
 interface SidebarProps {
   context: ISiteContext;
@@ -10,16 +20,31 @@ interface SidebarProps {
 const Sidebar = ({ context }: SidebarProps) => {
   const { locale } = context; 
 
-  return (
-    <aside className={styles.sidebar}>
-      <ul>
-        <li>{getTranslation(locale, 'sidebar', 'menuItems.home')}</li>
-        <li>{getTranslation(locale, 'sidebar', 'menuItems.about')}</li>
-        <li>{getTranslation(locale, 'sidebar', 'menuItems.blog')}</li>
-        <li>{getTranslation(locale, 'sidebar', 'menuItems.contact')}</li>
-      </ul>
-    </aside>
-  );
-};
+  const [sidebarData, setSidebarData] = useState<ISidebarData | null>(null)
 
-export default Sidebar;
+  useEffect(() => {
+    const fetchTranslations = async () => {
+      const translations = await getTranslation(locale, Namespaces.SIDEBAR)
+      setSidebarData(translations as ISidebarData)
+    }
+    fetchTranslations()
+  }, [locale])
+
+
+  if (!sidebarData) {
+    return <div>Loading...</div>
+  }
+
+  return (
+    <nav>
+      <ul>
+        <li>{sidebarData.menuItems.home}</li>
+        <li>{sidebarData.menuItems.about}</li>
+        <li>{sidebarData.menuItems.blog}</li>
+        <li>{sidebarData.menuItems.contact}</li>
+      </ul>
+    </nav>
+  )
+}
+
+export default Sidebar
