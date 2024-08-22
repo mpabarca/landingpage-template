@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { BooleanString, CustomHeaders, Locales } from "./enums";
+import { BooleanString, CustomHeaders } from "./enums";
 import parser from "accept-language-parser"
-import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "./constants";
+import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "./localization/constants";
+import { LanguageCode } from "./localization/enum";
 
-const getLocale = (request: NextRequest): Locales => {
-  let locale: Locales = DEFAULT_LOCALE
+const getLocale = (request: NextRequest): LanguageCode => {
+  let locale: LanguageCode = DEFAULT_LOCALE
   const acceptedLanguages = request.headers.get("Accept-Language") || ""
   if(!locale) locale = parser.pick(SUPPORTED_LOCALES, acceptedLanguages) || DEFAULT_LOCALE
   return locale
@@ -25,7 +26,7 @@ export const middleware = (request: NextRequest) => {
     return NextResponse.redirect(request.nextUrl)
   }
 
-  let locale = pathname.substring(1, 3) as Locales
+  let locale = pathname.substring(1, 3) as LanguageCode
   // And If there is only one supported locale, we use it
   if (supportedLocales.length === 1) locale = supportedLocales[0]
   response.headers.set(CustomHeaders.Locale, locale)

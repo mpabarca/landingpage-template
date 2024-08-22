@@ -1,8 +1,3 @@
-export enum Locales {
-  en = "en",
-  es = "es"
-}
-
 export enum CustomHeaders {
   Locale = "x-selected-locale",
   Pathname = "x-request-pathname",
@@ -12,4 +7,9 @@ export enum CustomHeaders {
 export enum BooleanString {
   yes = "YES",
   no = "FALSE"
+}
+
+export enum Link {
+  internal = "internal",
+  external = "external",
 }
