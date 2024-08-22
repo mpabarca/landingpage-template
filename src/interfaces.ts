@@ -1,7 +1,7 @@
-import { Locales } from "./enums"
+import { LanguageCode } from "@/localization/enum"
 
 export interface ISiteContext {
-  locale: Locales
+  locale: LanguageCode
   pathname: string
   hasMultipleLocales: boolean
 }
