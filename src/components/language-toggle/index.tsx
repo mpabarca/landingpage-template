@@ -1,36 +1,32 @@
 "use client"
-
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
-
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/radix-ui/dropdown-menu"
-import { Button } from "@/components/radix-ui/button"
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@/components/ui/toggle-group"
+import { ISiteContext } from "@/interfaces"
+import { DEFAULT_LOCALE } from "@/localization/constants"
+import { LanguageCode } from "@/localization/enum"
+import Link from "next/link"
+import { useEffect, useState } from "react"
 
-export function LanguageToggle() {
-  const { setTheme } = useTheme()
+interface LanguageToogleProps {
+  context: ISiteContext;
+}
+
+const LanguageToggle = ({context}: LanguageToogleProps) => {
+  const { locale } = context; 
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          English
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          Spanish
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <ToggleGroup type="single" variant="outline" value={locale}>
+      {Object.values(LanguageCode).map((lang) => (
+        <Link href={`/${lang}`} hrefLang={lang.toLowerCase()}>
+          <ToggleGroupItem key={lang} value={lang} aria-label={`Toggle ${lang.toUpperCase()}`}>
+            {lang.toUpperCase()}
+          </ToggleGroupItem>
+        </Link>
+      ))}
+    </ToggleGroup>
   )
 }
+
+export default LanguageToggle

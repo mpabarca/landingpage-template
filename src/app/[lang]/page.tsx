@@ -7,6 +7,7 @@ import BlogModule from '@/modules/Blog'
 import ContactModule from '@/modules/Contact'
 import { getSiteContext } from "@/lib/general-utils";
 import { ISiteContext } from "@/interfaces";
+import LanguageToggle from "@/components/language-toggle";
 
 const Page = () => {
   const context: ISiteContext = getSiteContext()
@@ -14,9 +15,10 @@ const Page = () => {
   return (
     <div className="flex flex-col lg:flex-row">
       {/* Sidebar */}
-      <aside className="w-full lg:w-1/4 p-4 bg-gray-100 dark:bg-gray-900">
+      <aside className="w-full lg:w-1/4 p-4 bg-gray-50 dark:bg-gray-900 flex flex-col gap-1">
         <Sidebar context={context} />
         <ModeToggle />
+        <LanguageToggle context={context} />
       </aside>
 
       {/* Main Content */}
