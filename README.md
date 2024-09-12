@@ -176,6 +176,6 @@ export default SampleComponent;
 This structure ensures components are easy to use, extend, and maintain as the project grows.
 
 ## 📜 License
-This project is licensed under the MIT License.
+This project is licensed under the (MIT License)[https://mit-license.org/].
 
 
