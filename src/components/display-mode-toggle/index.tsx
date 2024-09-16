@@ -11,7 +11,7 @@ import {
 } from "@/components/radix-ui/dropdown-menu"
 import { Button } from "@/components/radix-ui/button"
 
-export function ModeToggle() {
+export function DisplayModeToggle() {
   const { setTheme } = useTheme()
 
   return (

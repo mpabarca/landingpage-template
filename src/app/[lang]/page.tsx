@@ -1,4 +1,4 @@
-import { ModeToggle } from "@/components/mode-toggle";
+import { DisplayModeToggle } from "@/components/display-mode-toggle";
 import { useRouter } from 'next/router'
 import Sidebar from '@/components/sidebar'
 import HomeModule from '@/modules/Home'
@@ -17,7 +17,7 @@ const Page = () => {
       {/* Sidebar */}
       <aside className="w-full lg:w-1/4 p-4 bg-gray-50 dark:bg-gray-900 flex flex-col gap-1">
         <Sidebar context={context} />
-        <ModeToggle />
+        <DisplayModeToggle />
         <LanguageToggle context={context} />
       </aside>
 
