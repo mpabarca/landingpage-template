@@ -1,7 +1,3 @@
-"use client"
-import { useEffect, useState } from 'react';
-import { getTranslation } from '@/localization';
-import { Namespaces } from '@/localization/enum';
 import { ISiteContext } from "@/interfaces";
 import styles from './Home.module.css';
 
@@ -13,30 +9,15 @@ export interface IHomeData {
 
 interface HomeModuleProps {
   context: ISiteContext;
+  content: IHomeData;
 }
 
-const HomeModule = ({ context }: HomeModuleProps) => {
-  const { locale } = context; 
-  const [homeData, setHomeData] = useState<IHomeData | null>(null);
-
-  const fetchTranslations = async () => {
-    const translations = await getTranslation(locale, Namespaces.HOME);
-    setHomeData(translations);
-  };
-
-  useEffect(() => {
-    fetchTranslations();
-  }, [locale]);
-
-  if (!homeData) {
-    return <div>Loading...</div>;
-  }
-
+const HomeModule = ({ context, content }: HomeModuleProps) => {
   return (
     <section>
-      <h1>{homeData.title}</h1>
-      <p>{homeData.welcomeMessage}</p>
-      <p>{homeData.intro}</p>
+      <h1>{content.title}</h1>
+      <p>{content.welcomeMessage}</p>
+      <p>{content.intro}</p>
     </section>
   );
 };
