@@ -14,7 +14,7 @@ interface HomeModuleProps {
 
 const HomeModule = ({ context, content }: HomeModuleProps) => {
   return (
-    <section>
+    <section id="home">
       <h1>{content.title}</h1>
       <p>{content.welcomeMessage}</p>
       <p>{content.intro}</p>

@@ -12,7 +12,7 @@ interface AboutModuleProps {
 
 const AboutModule = ({ context, content }: AboutModuleProps) => {
   return (
-    <section>
+    <section id="about" className="pt-16">
       <h1>{content.title}</h1>
       <p>{content.description}</p>
     </section>

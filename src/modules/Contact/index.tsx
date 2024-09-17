@@ -15,7 +15,7 @@ interface ContactModuleProps {
 
 const ContactModule = ({ context, content }: ContactModuleProps) => {
   return (
-    <section>
+    <section id="contact" className="pt-16">
       <h1>{content.title}</h1>
       <p>{content.intro}</p>
     </section>

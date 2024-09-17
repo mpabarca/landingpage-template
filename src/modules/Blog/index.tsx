@@ -12,7 +12,7 @@ interface BlogModuleProps {
 
 const BlogModule = ({ context, content }: BlogModuleProps) => {
   return (
-    <section>
+    <section id="blog" className="pt-16">
       <h1>{content.title}</h1>
       <p>{content.intro}</p>
     </section>

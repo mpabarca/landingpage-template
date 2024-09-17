@@ -23,29 +23,17 @@ const Page = async() => {
   return (
     <div className="flex flex-col lg:flex-row">
       {/* Sidebar */}
-      <Sidebar className="lg:w-1/6" context={context} content={content[Namespaces.SIDEBAR]} />
-
+      <Sidebar context={context} content={content[Namespaces.SIDEBAR]} />
       {/* Main Content */}
       <main className="flex-1 p-8 space-y-16">
         {/* Home Section */}
-        <section id="home">
           <HomeModule context={context} content={content[Namespaces.HOME]} />
-        </section>
-
         {/* About Section */}
-        <section id="about" className="pt-16">
           <AboutModule context={context} content={content[Namespaces.ABOUT]} />
-        </section>
-
         {/* Blog Section */}
-        <section id="blog" className="pt-16">
           <BlogModule context={context} content={content[Namespaces.BLOG]} />
-        </section>
-
         {/* Contact Section */}
-        <section id="contact" className="pt-16">
           <ContactModule context={context} content={content[Namespaces.CONTACT]} />
-        </section>
       </main>
     </div>
   )
