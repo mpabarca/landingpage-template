@@ -5,7 +5,7 @@ import {
 } from "@/components/ui/toggle-group"
 import { ISiteContext } from "@/interfaces"
 import { DEFAULT_LOCALE } from "@/localization/constants"
-import { LanguageCode } from "@/localization/enum"
+import { LanguageCode } from "@/localization/enums"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 

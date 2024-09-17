@@ -1,4 +1,4 @@
-import { LanguageCode } from "./enum";
+import { LanguageCode } from "./enums";
 
 export const DEFAULT_LOCALE = LanguageCode.es
 
