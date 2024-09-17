@@ -1,25 +1,18 @@
-import { DisplayModeToggle } from "@/components/display-mode-toggle";
-import { useRouter } from 'next/router'
-import Sidebar from '@/components/sidebar'
+import Sidebar from '@/modules/Sidebar'
 import HomeModule from '@/modules/Home'
 import AboutModule from '@/modules/About'
 import BlogModule from '@/modules/Blog'
 import ContactModule from '@/modules/Contact'
 import { getSiteContext } from "@/lib/general-utils";
 import { ISiteContext } from "@/interfaces";
-import LanguageToggle from "@/components/language-toggle";
 
 const Page = () => {
-  const context: ISiteContext = getSiteContext()
+  const context: ISiteContext =  getSiteContext()
 
   return (
     <div className="flex flex-col lg:flex-row">
       {/* Sidebar */}
-      <aside className="w-full lg:w-1/4 p-4 bg-gray-50 dark:bg-gray-900 flex flex-col gap-1">
-        <Sidebar context={context} />
-        <DisplayModeToggle />
-        <LanguageToggle context={context} />
-      </aside>
+      <Sidebar styles={"lg:w-1/6"} context={context} />
 
       {/* Main Content */}
       <main className="flex-1 p-8 space-y-16">

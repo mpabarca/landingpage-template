@@ -1,4 +1,4 @@
-import { ISidebarData } from "@/components/sidebar";
+import { ISidebarData } from "@/modules/Sidebar";
 
 export const sidebar: ISidebarData = {
   menuItems: {

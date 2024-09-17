@@ -1,8 +1,11 @@
 "use client"
 import { useEffect, useState } from 'react'
 import { getTranslation } from '@/localization'
-import { LanguageCode, Namespaces } from '@/localization/enum'
+import { Namespaces } from '@/localization/enum'
 import { ISiteContext } from "@/interfaces";
+import LanguageToggle from "@/components/language-toggle";
+import { DisplayModeToggle } from "@/components/display-mode-toggle";
+import { useRouter } from 'next/router'
 
 export interface ISidebarData {
   menuItems: {
@@ -15,9 +18,10 @@ export interface ISidebarData {
 
 interface SidebarProps {
   context: ISiteContext;
+  styles: string;
 }
 
-const Sidebar = ({ context }: SidebarProps) => {
+const Sidebar = ({ context, styles }: SidebarProps) => {
   const { locale } = context; 
 
   const [sidebarData, setSidebarData] = useState<ISidebarData | null>(null)
@@ -36,13 +40,16 @@ const Sidebar = ({ context }: SidebarProps) => {
   }
 
   return (
-    <nav>
+    <nav className={`w-full h-screen p-4 bg-gray-50 dark:bg-gray-900 flex flex-col gap-1 justify-center ${styles}`}>
       <ul>
         <li>{sidebarData.menuItems.home}</li>
         <li>{sidebarData.menuItems.about}</li>
         <li>{sidebarData.menuItems.blog}</li>
         <li>{sidebarData.menuItems.contact}</li>
       </ul>
+      <DisplayModeToggle />
+      <LanguageToggle context={context} />
+
     </nav>
   )
 }
