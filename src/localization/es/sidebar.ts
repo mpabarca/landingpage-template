@@ -1,6 +1,6 @@
-import { ISidebarData } from "@/modules/Sidebar";
+import { ISidebarModuleData } from "@/modules/Sidebar";
 
-export const sidebar: ISidebarData = {
+export const sidebar: ISidebarModuleData = {
   menuItems: {
     home: "Inicio .",
     about: "Sobre Mí .",

@@ -1,10 +1,10 @@
 import { ISiteContext } from "@/interfaces";
 import LanguageToggle from "@/components/language-toggle";
 import { DisplayModeToggle } from "@/components/display-mode-toggle";
-import { cn } from '@/lib/client-utils';
 import styles from './Sidebar.module.css';
-
-export interface ISidebarData {
+import Image from 'next/image'
+import Logo from '/public/next.svg'
+export interface ISidebarModuleData {
   menuItems: {
     home: string
     about: string
@@ -13,21 +13,29 @@ export interface ISidebarData {
   }
 }
 
-interface SidebarProps {
+interface SidebarModuleProps {
   context: ISiteContext;
-  className: string;
-  content: ISidebarData;
+  content: ISidebarModuleData;
 }
 
-const Sidebar = ({ context, className, content }: SidebarProps) => {
+const SidebarModule = ({ context, content }: SidebarModuleProps) => {
 
   return (
-    <nav className={cn("w-full h-screen p-4 bg-gray-50 dark:bg-gray-900 flex flex-col gap-1 justify-center", className)}>
+    <nav className="w-full h-screen lg:w-1/6 p-4 bg-gray-50 dark:bg-gray-900 flex flex-col gap-1 justify-center">
+      {/* Logo Section */}
+      <Image
+          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
+          src={Logo}
+          alt="Logo"
+          width={180}
+          height={37}
+          priority
+        />
       <ul>
-        <li>{content.menuItems.home}</li>
-        <li>{content.menuItems.about}</li>
-        <li>{content.menuItems.blog}</li>
-        <li>{content.menuItems.contact}</li>
+        <li key="sidebar-home">{content.menuItems.home}</li>
+        <li key="sidebar-about">{content.menuItems.about}</li>
+        <li key="sidebar-blog">{content.menuItems.blog}</li>
+        <li key="sidebar-contact">{content.menuItems.contact}</li>
       </ul>
       <DisplayModeToggle />
       <LanguageToggle context={context} />
@@ -36,4 +44,4 @@ const Sidebar = ({ context, className, content }: SidebarProps) => {
   )
 }
 
-export default Sidebar
+export default SidebarModule
