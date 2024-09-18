@@ -3,6 +3,7 @@ import styles from "./Navbar.module.css";
 import { Namespaces } from "@/localization/enums";
 import MobileNavbar from "./MobileNavbar";
 import DesktopNavbar from "./DesktopNavbar";
+import React from "react";
 
 export interface INavbarModuleData {
   menuItems: {
@@ -30,8 +31,12 @@ const NavbarModule = ({ context, content, desktopNavbarStyle, navigationModules 
 
   return (
     <>
-      <MobileNavbar context={context} content={content} navigationModules={navigationModules} />
-      <DesktopNavbar context={context} content={content} navigationModules={navigationModules} style={desktopNavbarStyle} />
+      <nav className="block lg:hidden">
+        <MobileNavbar context={context} content={content} navigationModules={navigationModules} />
+      </nav>
+      <nav className="hidden lg:block">
+        <DesktopNavbar context={context} content={content} navigationModules={navigationModules} style={desktopNavbarStyle} />
+      </nav>
     </>
   );
 };
