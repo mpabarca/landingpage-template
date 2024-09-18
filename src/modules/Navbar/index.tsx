@@ -4,6 +4,7 @@ import { DisplayModeToggle } from "@/components/display-mode-toggle";
 import styles from './Navbar.module.css';
 import Image from 'next/image'
 import Logo from '/public/next.svg'
+import { cn } from "@/lib/client-utils";
 
 export interface INavbarModuleData {
   menuItems: {
@@ -14,15 +15,41 @@ export interface INavbarModuleData {
   }
 }
 
+export interface NavbarStyleType {
+  isSidebar: boolean
+}
+
 interface NavbarModuleProps {
   context: ISiteContext;
   content: INavbarModuleData;
+  style: NavbarStyleType;
 }
 
-const NavbarModule = ({ context, content }: NavbarModuleProps) => {
+const NavbarModule = ({ context, content, style }: NavbarModuleProps) => {
+
+  const navStyle = `
+    ${style.isSidebar ? 
+      "w-full h-screen lg:w-1/6 p-8 flex-col" :
+      "w-full h-24 p-8 flex-row items-center"
+    }
+  `
+
+  const navContentStyle = `
+    ${style.isSidebar ? 
+      "flex-col" :
+      "flex-row"
+    }
+  `
+
+  const navToggletStyle = `
+    ${style.isSidebar ? 
+      "flex-col" :
+      "flex-row"
+    }
+  `
 
   return (
-    <nav className="w-full h-screen lg:w-1/6 p-6 bg-gray-50 dark:bg-gray-900 flex flex-col gap-1 justify-between">
+    <nav className={cn("flex gap-1 justify-between bg-gray-50 dark:bg-gray-900", navStyle)}>
       {/* Logo Section */}
       <Image
           className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
@@ -32,15 +59,19 @@ const NavbarModule = ({ context, content }: NavbarModuleProps) => {
           height={37}
           priority
         />
-      <ul>
+      <ul id='navbar-content' className={cn("flex gap-3" ,navContentStyle)}>
         <li key="navbar-home">{content.menuItems.home}</li>
         <li key="navbar-about">{content.menuItems.about}</li>
         <li key="navbar-blog">{content.menuItems.blog}</li>
         <li key="navbar-contact">{content.menuItems.contact}</li>
       </ul>
-      <ul className="flex flex-col gap-1">
-        <DisplayModeToggle />
-        <LanguageToggle context={context} />
+      <ul className={cn("flex gap-1", navToggletStyle)}>
+        <li className={`${!style.isSidebar && "order-last"}`}>
+          <DisplayModeToggle />
+        </li>
+        <li>
+          <LanguageToggle context={context} />
+        </li>
       </ul>
 
     </nav>

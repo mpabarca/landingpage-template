@@ -1,4 +1,4 @@
-import Navbar from '@/modules/Navbar'
+import Navbar, { NavbarStyleType } from '@/modules/Navbar'
 import HomeModule from '@/modules/Home'
 import AboutModule from '@/modules/About'
 import BlogModule from '@/modules/Blog'
@@ -20,10 +20,12 @@ const Page = async() => {
     Namespaces.NAVBAR,
   ]);
 
+  const navbarStyle: NavbarStyleType = {isSidebar: false}
+
   return (
-    <div className="flex flex-col lg:flex-row">
+    <div className={`flex ${navbarStyle.isSidebar ? "flex-row" : "flex-col"}`}>
       {/* Navbar */}
-      <Navbar context={context} content={content[Namespaces.NAVBAR]} />
+      <Navbar context={context} content={content[Namespaces.NAVBAR]} style={navbarStyle} />
       {/* Main Content */}
       <main className="flex-1 p-8 space-y-16">
         {/* Home Section */}
