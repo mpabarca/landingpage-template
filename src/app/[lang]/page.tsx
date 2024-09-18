@@ -46,7 +46,7 @@ const Page = async() => {
       {/* Navbar */}
       <Navbar context={context} content={content[Namespaces.NAVBAR]} desktopNavbarStyle={desktopNavbarStyle} navigationModules={navigationModules} />
       {/* Main Content */}
-      <main className="flex-1 p-8 space-y-16 w-full" style={mainStyle}>
+      <main className="flex-1 space-y-16 w-full" style={mainStyle}>
         {/* Dynamically render the Module Section */}
         {modulesToShow.map((namespace: Namespaces) => {
           const ModuleComponent = componentMap[namespace];
