@@ -11,7 +11,6 @@ import { getPageContent } from '@/services/page-service'
 const Page = async() => {
   const context: ISiteContext =  getSiteContext()
   const locale = context.locale as LanguageCode
-
   // Main Modules that will be on the navigation bar
   const navigationModules: Namespaces[] = [
     Namespaces.HOME,
@@ -26,7 +25,6 @@ const Page = async() => {
     Namespaces.BLOG,
     Namespaces.CONTACT,
   ]
-
   // Map each namespace from Namespaces[] to its respective component
   const componentMap: { [key in Namespaces]: React.ComponentType<any> } = {
     [Namespaces.HOME]: HomeModule,
@@ -35,7 +33,6 @@ const Page = async() => {
     [Namespaces.CONTACT]: ContactModule,
     [Namespaces.NAVBAR]: Navbar,
   };
-
   // Fetch content for required modules
   const content = await getPageContent(locale, modulesToShow.concat(Namespaces.NAVBAR));
   const navbarStyle: NavbarStyleType = {isSidebar: true, size: "50px"}
