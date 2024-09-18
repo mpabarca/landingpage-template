@@ -20,6 +20,7 @@ export interface INavbarModuleData {
 
 export interface NavbarStyleType {
   isSidebar: boolean;
+  size: string;
 }
 
 interface NavbarModuleProps {
@@ -30,11 +31,16 @@ interface NavbarModuleProps {
 }
 
 const NavbarModule = ({ context, content, style, navigationModules }: NavbarModuleProps) => {
+  const mainStyle: React.CSSProperties = style.isSidebar
+  ? { width: style.size, minWidth: "200px" } 
+  : { height: style.size, minHeight: "100px" }
+
   const navStyle = `
+    flex justify-between gap-2 bg-gray-50 dark:bg-gray-900
     ${
       style.isSidebar
-        ? "w-full h-screen lg:w-1/6 p-8 flex-col"
-        : "w-full h-24 p-8 flex-row items-center"
+        ? `h-screen p-8 flex-col fixed left-0`
+        : `w-full p-8 flex-row items-center fixed top-0`
     }
   `;
 
@@ -47,12 +53,7 @@ const NavbarModule = ({ context, content, style, navigationModules }: NavbarModu
   `;
 
   return (
-    <nav
-      className={cn(
-        "flex gap-1 justify-between bg-gray-50 dark:bg-gray-900",
-        navStyle
-      )}
-    >
+    <nav className={navStyle} style={mainStyle}>
       {/* Logo Section */}
       <Image
         className='relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert'
