@@ -9,13 +9,14 @@ export interface IContactData {
 }
 
 interface ContactModuleProps {
+  id: string;
   context: ISiteContext;
   content: IContactData;
 }
 
-const ContactModule = ({ context, content }: ContactModuleProps) => {
+const ContactModule = ({ id, context, content }: ContactModuleProps) => {
   return (
-    <section id="contact" className="pt-16">
+    <section id={id} className="w-full h-screen flex flex-col items-start justify-center bg-gray-100">
       <h1>{content.title}</h1>
       <p>{content.intro}</p>
     </section>

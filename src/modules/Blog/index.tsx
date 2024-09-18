@@ -6,13 +6,14 @@ export interface IBlogData {
 }
 
 interface BlogModuleProps {
+  id: string;
   context: ISiteContext;
   content: IBlogData;
 }
 
-const BlogModule = ({ context, content }: BlogModuleProps) => {
+const BlogModule = ({ id, context, content }: BlogModuleProps) => {
   return (
-    <section id="blog" className="pt-16">
+    <section id={id} className="w-full h-screen flex flex-col items-start justify-center">
       <h1>{content.title}</h1>
       <p>{content.intro}</p>
     </section>

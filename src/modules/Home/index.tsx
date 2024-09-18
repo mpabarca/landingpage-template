@@ -8,13 +8,14 @@ export interface IHomeData {
 }
 
 interface HomeModuleProps {
+  id: string;
   context: ISiteContext;
   content: IHomeData;
 }
 
-const HomeModule = ({ context, content }: HomeModuleProps) => {
+const HomeModule = ({ id, context, content }: HomeModuleProps) => {
   return (
-    <section id="home">
+    <section id={id} className="w-full h-screen flex flex-col items-start justify-center">
       <h1>{content.title}</h1>
       <p>{content.welcomeMessage}</p>
       <p>{content.intro}</p>

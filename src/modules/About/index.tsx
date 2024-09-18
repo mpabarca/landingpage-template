@@ -6,13 +6,14 @@ export interface IAboutData {
 }
 
 interface AboutModuleProps {
+  id: string;
   context: ISiteContext;
   content: IAboutData;
 }
 
-const AboutModule = ({ context, content }: AboutModuleProps) => {
+const AboutModule = ({ id, context, content }: AboutModuleProps) => {
   return (
-    <section id="about" className="pt-16">
+    <section id={id} className="w-full h-screen flex flex-col items-start justify-center bg-gray-100">
       <h1>{content.title}</h1>
       <p>{content.description}</p>
     </section>
