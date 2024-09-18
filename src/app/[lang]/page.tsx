@@ -18,7 +18,6 @@ const Page = async() => {
     Namespaces.ABOUT,
     Namespaces.BLOG,
     Namespaces.CONTACT,
-    Namespaces.NAVBAR,
   ]
   // Array of modules to show on this page
   const modulesToShow: Namespaces[] = [
@@ -26,13 +25,21 @@ const Page = async() => {
     Namespaces.ABOUT,
     Namespaces.BLOG,
     Namespaces.CONTACT,
-    Namespaces.NAVBAR,
   ]
 
-  // Fetch content for required modules
-  const content = await getPageContent(locale, modulesToShow);
+  // Map each namespace from Namespaces[] to its respective component
+  const componentMap: { [key in Namespaces]: React.ComponentType<any> } = {
+    [Namespaces.HOME]: HomeModule,
+    [Namespaces.ABOUT]: AboutModule,
+    [Namespaces.BLOG]: BlogModule,
+    [Namespaces.CONTACT]: ContactModule,
+    [Namespaces.NAVBAR]: Navbar,
+  };
 
-  const navbarStyle: NavbarStyleType = {isSidebar: false}
+  // Fetch content for required modules
+  const content = await getPageContent(locale, modulesToShow.concat(Namespaces.NAVBAR));
+
+  const navbarStyle: NavbarStyleType = {isSidebar: true}
 
   return (
     <div className={`flex ${navbarStyle.isSidebar ? "flex-row" : "flex-col"}`}>
@@ -40,14 +47,13 @@ const Page = async() => {
       <Navbar context={context} content={content[Namespaces.NAVBAR]} style={navbarStyle} navigationModules={navigationModules} />
       {/* Main Content */}
       <main className="flex-1 p-8 space-y-16">
-        {/* Home Section */}
-          <HomeModule id={Namespaces.HOME} context={context} content={content[Namespaces.HOME]} />
-        {/* About Section */}
-          <AboutModule id={Namespaces.ABOUT} context={context} content={content[Namespaces.ABOUT]} />
-        {/* Blog Section */}
-          <BlogModule id={Namespaces.BLOG} context={context} content={content[Namespaces.BLOG]} />
-        {/* Contact Section */}
-          <ContactModule id={Namespaces.CONTACT} context={context} content={content[Namespaces.CONTACT]} />
+        {/* Dynamically render the Module Section */}
+        {modulesToShow.map((namespace: Namespaces) => {
+          const ModuleComponent = componentMap[namespace];
+          return (
+            <ModuleComponent context={context} content={content[namespace]} id={namespace}/>
+          )
+        })}
       </main>
     </div>
   )
