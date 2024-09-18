@@ -1,4 +1,4 @@
-import Sidebar from '@/modules/Sidebar'
+import Navbar from '@/modules/Navbar'
 import HomeModule from '@/modules/Home'
 import AboutModule from '@/modules/About'
 import BlogModule from '@/modules/Blog'
@@ -17,13 +17,13 @@ const Page = async() => {
     Namespaces.ABOUT,
     Namespaces.BLOG,
     Namespaces.CONTACT,
-    Namespaces.SIDEBAR,
+    Namespaces.NAVBAR,
   ]);
 
   return (
     <div className="flex flex-col lg:flex-row">
-      {/* Sidebar */}
-      <Sidebar context={context} content={content[Namespaces.SIDEBAR]} />
+      {/* Navbar */}
+      <Navbar context={context} content={content[Namespaces.NAVBAR]} />
       {/* Main Content */}
       <main className="flex-1 p-8 space-y-16">
         {/* Home Section */}

@@ -112,7 +112,7 @@ The project uses `next-themes` for efficient dark/light mode toggling.
 
 ## 🧩 Component Structure and Modularity
 
-Designed with modularity in mind, components are reusable, maintainable, and easy to extend. Each section of the site, such as Home, Sidebar or Footer, is structured as a standalone component that receives its data from the server, ensuring fast and efficient rendering.
+Designed with modularity in mind, components are reusable, maintainable, and easy to extend. Each section of the site, such as Home, Navbar or Footer, is structured as a standalone component that receives its data from the server, ensuring fast and efficient rendering.
 
 ### 🗂️ Key Principles
 
@@ -157,14 +157,14 @@ const Page = async () => {
 
   // Fetch content for required modules
   const content = await getPageContent(locale, [
-    Namespaces.SIDEBAR,
+    Namespaces.NAVBAR,
     Namespaces.HOME,
     {...}
   ]);
 
   return (
     <div>
-      <Sidebar context={context} content={content[Namespaces.SIDEBAR]} />
+      <Navbar context={context} content={content[Namespaces.NAVBAR]} />
       <main>
         <section id="home">
           <HomeModule content={content[Namespaces.HOME]} />
@@ -194,7 +194,7 @@ export interface IHomeData {
 
 interface HomeModuleProps {
   context: ISiteContext;
-  content: ISidebarData;
+  content: INavbarData;
 }
 
 const HomeModule = ({ context, content }: HomeModuleProps) => {
