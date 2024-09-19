@@ -1,7 +1,3 @@
-"use client"
-import { useEffect, useState } from 'react'
-import { getTranslation } from '@/localization'
-import { LanguageCode, Namespaces } from '@/localization/enum'
 import { ISiteContext } from "@/interfaces";
 
 export interface IAboutData {
@@ -10,30 +6,16 @@ export interface IAboutData {
 }
 
 interface AboutModuleProps {
+  id: string;
   context: ISiteContext;
+  content: IAboutData;
 }
 
-const AboutModule = ({ context }: AboutModuleProps) => {
-  const { locale } = context; 
-  const [aboutData, setAboutData] = useState<IAboutData | null>(null)
-
-  useEffect(() => {
-    const fetchTranslations = async () => {
-      const translations = await getTranslation(locale, Namespaces.ABOUT)
-      setAboutData(translations as IAboutData)
-    }
-
-    fetchTranslations()
-  }, [locale])
-
-  if (!aboutData) {
-    return <div>Loading...</div>
-  }
-
+const AboutModule = ({ id, context, content }: AboutModuleProps) => {
   return (
-    <section>
-      <h1>{aboutData.title}</h1>
-      <p>{aboutData.description}</p>
+    <section id={id} className="w-full h-screen p-8 flex flex-col items-start justify-center bg-gray-100 dark:bg-gray-500">
+      <h1>{content.title}</h1>
+      <p>{content.description}</p>
     </section>
   )
 }

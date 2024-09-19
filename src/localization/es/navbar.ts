@@ -1,6 +1,6 @@
-import { ISidebarData } from "@/components/sidebar";
+import { INavbarModuleData } from "@/modules/Navbar";
 
-export const sidebar: ISidebarData = {
+export const navbar: INavbarModuleData = {
   menuItems: {
     home: "Inicio",
     about: "Sobre Mí",

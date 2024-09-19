@@ -1,6 +1,6 @@
 import { BooleanString, CustomHeaders } from "@/enums"
 import { ISiteContext } from "@/interfaces";
-import { LanguageCode } from "@/localization/enum";
+import { LanguageCode } from "@/localization/enums";
 import { headers } from "next/headers"
 
 export const getSiteContext = (): ISiteContext => {

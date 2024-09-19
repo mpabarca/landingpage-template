@@ -1,5 +1,5 @@
 import { LocalizationNamespace } from './types';
-import { LanguageCode, Namespaces } from './enum';
+import { LanguageCode, Namespaces } from './enums';
 
 const importLocale = async (locale: LanguageCode, namespace: Namespaces) => {
   try {

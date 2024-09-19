@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { BooleanString, CustomHeaders } from "./enums";
 import parser from "accept-language-parser"
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "./localization/constants";
-import { LanguageCode } from "./localization/enum";
+import { LanguageCode } from "./localization/enums";
 
 const getLocale = (request: NextRequest): LanguageCode => {
   let locale: LanguageCode = DEFAULT_LOCALE

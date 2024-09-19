@@ -1,7 +1,3 @@
-"use client"
-import { useEffect, useState } from 'react'
-import { getTranslation } from '@/localization'
-import { LanguageCode, Namespaces } from '@/localization/enum'
 import { ISiteContext } from "@/interfaces";
 
 export interface IBlogData {
@@ -10,30 +6,16 @@ export interface IBlogData {
 }
 
 interface BlogModuleProps {
+  id: string;
   context: ISiteContext;
+  content: IBlogData;
 }
 
-const BlogModule = ({ context }: BlogModuleProps) => {
-  const { locale } = context; 
-  const [blogData, setBlogData] = useState<IBlogData | null>(null)
-
-  useEffect(() => {
-    const fetchTranslations = async () => {
-      const translations = await getTranslation(locale, Namespaces.BLOG)
-      setBlogData(translations as IBlogData)
-    }
-
-    fetchTranslations()
-  }, [locale])
-
-  if (!blogData) {
-    return <div>Loading...</div>
-  }
-
+const BlogModule = ({ id, context, content }: BlogModuleProps) => {
   return (
-    <section>
-      <h1>{blogData.title}</h1>
-      <p>{blogData.intro}</p>
+    <section id={id} className="w-full h-screen p-8 flex flex-col items-start justify-center">
+      <h1>{content.title}</h1>
+      <p>{content.intro}</p>
     </section>
   )
 }

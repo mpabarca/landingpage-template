@@ -1,7 +1,6 @@
-"use client"
 import { useEffect, useState } from 'react'
 import { getTranslation } from '@/localization'
-import { LanguageCode, Namespaces } from '@/localization/enum'
+import { LanguageCode, Namespaces } from '@/localization/enums'
 import { ISiteContext } from "@/interfaces";
 
 export interface IContactData {
@@ -10,30 +9,16 @@ export interface IContactData {
 }
 
 interface ContactModuleProps {
+  id: string;
   context: ISiteContext;
+  content: IContactData;
 }
 
-const ContactModule = ({ context }: ContactModuleProps) => {
-  const { locale } = context; 
-  const [contactData, setContactData] = useState<IContactData | null>(null)
-
-  useEffect(() => {
-    const fetchTranslations = async () => {
-      const translations = await getTranslation(locale, Namespaces.CONTACT)
-      setContactData(translations as IContactData)
-    }
-
-    fetchTranslations()
-  }, [locale])
-
-  if (!contactData) {
-    return <div>Loading...</div>
-  }
-
+const ContactModule = ({ id, context, content }: ContactModuleProps) => {
   return (
-    <section>
-      <h1>{contactData.title}</h1>
-      <p>{contactData.intro}</p>
+    <section id={id} className="w-full h-screen p-8 flex flex-col items-start justify-center bg-gray-100 dark:bg-gray-500">
+      <h1>{content.title}</h1>
+      <p>{content.intro}</p>
     </section>
   )
 }

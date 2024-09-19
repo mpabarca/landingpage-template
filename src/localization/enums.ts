@@ -8,5 +8,5 @@ export enum Namespaces {
   ABOUT = 'about',
   BLOG = 'blog',
   CONTACT = 'contact',
-  SIDEBAR = 'sidebar',
+  NAVBAR = 'navbar'
 }

@@ -1,4 +1,4 @@
-import { LanguageCode, Namespaces } from "./enum";
+import { LanguageCode, Namespaces } from "./enums";
 
 export interface LocalizationNamespace {
   [key: string]: string;

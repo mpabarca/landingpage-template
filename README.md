@@ -112,58 +112,103 @@ The project uses `next-themes` for efficient dark/light mode toggling.
 
 ## 🧩 Component Structure and Modularity
 
-Designed with modularity in mind, components are reusable, maintainable, and easy to extend.
+Designed with modularity in mind, components are reusable, maintainable, and easy to extend. Each section of the site, such as Home, Navbar or Footer, is structured as a standalone component that receives its data from the server, ensuring fast and efficient rendering.
 
 ### 🗂️ Key Principles
 
-  - **📏 Separation of Concerns:** Each component handles its own logic, styling, and state management.
-  - **♻️ Reusable Elements:** Components are flexible with customizable props, making them adaptable across the app.
-  - **🚀 Extensibility:** Easily extend components without altering the core structure.
+  - **📏 Separation of Concerns:** Each component handles its own logic, styling, and state management where necessary. This keeps components focused, modular, and easier to debug or extend.
+  - **♻️ Reusable Elements:** Components are designed with customizable props and minimal hard-coded values to ensure they can be reused across different parts of the application, reducing redundancy.
+  - **🚀 Extensibility:** Components can be easily extended with new functionality without altering their core structure, making the codebase scalable and adaptable to new requirements.
 
-### 🧪 Component Structure Example
+### 🧪 How Modules Work with Localization and Content Fetching
 
-Let's look at a typical component structure and how it integrates with themes, localization, and context management.
+Let's look at a typical component structure and how it integrates with themes, localization, and context management. Where content is fetched server-side and passed to the modules, improving performance and reducing the need for client-side fetching.
 
-#### Example Component: `SampleComponent`
+#### Content Fetching Approach
+A centralized function `getPageContent` in `src/services/page-service.ts` fetches translations and other page-specific content based on the given locale and an array of namespaces. This approach ensures that all necessary data is loaded before the page is rendered.
 
-- **Location**: `src/components/SampleComponent.tsx`
-- **Purpose**: Demonstrates how a component is structured and organized, with support for themes and localization.
+```ts
+// src/services/page-service.ts
+export async function getPageContent(
+  locale: LanguageCode,
+  namespaces: Namespaces[]
+): Promise<PageContent> {
+  const content: PageContent = {};
 
-**Component Structure:**
+  // Fetch translations for each namespace
+  await Promise.all(
+    namespaces.map(async (namespace) => {
+      content[namespace] = await getTranslation(locale, namespace);
+    })
+  );
+
+  return content;
+}
+```
+
+#### Page-Level Content Management
+ In the page component, `getPageContent` is used to fetch the necessary content for all modules. The fetched content is then passed as props to the server-side components, allowing them to render without the need for useEffect or use client.
 
 ```tsx
-// src/components/SampleComponent.tsx
-import { useEffect } from 'react';
-import { useTheme } from 'next-themes'; // Theme integration
-import { getTranslation } from '../localization/getTranslation'; // Localization function
-import { LanguageCode, Namespaces } from '../localization/enums'; // Enums for localization
+// src/app/[lang]/page.tsx
+const Page = async () => {
+  const context: ISiteContext = getSiteContext();
+  const locale = context.locale as LanguageCode;
 
-const SampleComponent = () => {
-  const { theme, setTheme } = useTheme(); // Theme hook to get and set the current theme
-  const [translation, setTranslation] = React.useState({});
-
-  // Fetch localization data when component mounts
-  useEffect(() => {
-    async function loadTranslations() {
-      const data = await getTranslation(LanguageCode.EN, Namespaces.HOME); // Example usage
-      setTranslation(data);
-    }
-    loadTranslations();
-  }, []);
+  // Fetch content for required modules
+  const content = await getPageContent(locale, [
+    Namespaces.NAVBAR,
+    Namespaces.HOME,
+    {...}
+  ]);
 
   return (
-    <div className={`component-container ${theme === 'dark' ? 'dark-mode' : 'light-mode'}`}>
-      <h1>{translation.welcome || 'Welcome'}</h1>
-      <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}>
-        Toggle Theme
-      </button>
+    <div>
+      <Navbar context={context} content={content[Namespaces.NAVBAR]} />
+      <main>
+        <section id="home">
+          <HomeModule content={content[Namespaces.HOME]} />
+        </section>
+        {...}
+      </main>
     </div>
   );
 };
-
-export default SampleComponent;
 ```
 
+#### How Module Component Works:
+- **Server-Side Rendering:** Modules are rendered on the server and receive their localized content and data directly via props, eliminating the need for useEffect or other client-side fetching techniques.
+
+- **Structured Data Definitions:** Each module should define its own interface for the data it needs `I{module-name}Data` and ensure that these data structures align with the localization files located in `src/localization/{LanguageCode}/{Namespaces.[module-name]}`. This interface should be used consistently with the corresponding localization files.
+
+- **Module Props Interface:** Define a `{module-name}ModuleProps` interface that outlines the props each module will accept. This keeps the component API clean and ensures type safety.
+
+
+Example `src/modules/Home.tsx`:
+```tsx
+export interface IHomeData {
+  title: string;
+  welcomeMessage: string;
+  intro: string;
+}
+
+interface HomeModuleProps {
+  context: ISiteContext;
+  content: INavbarData;
+}
+
+const HomeModule = ({ context, content }: HomeModuleProps) => {
+  return (
+    <section>
+      <h1>{content.title}</h1>
+      <p>{content.welcomeMessage}</p>
+      <p>{content.intro}</p>
+    </section>
+  );
+};
+
+export default HomeModule;
+```
 
 ### 📚 Guidelines for Component Development
 

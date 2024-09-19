@@ -1,47 +1,55 @@
-import { DisplayModeToggle } from "@/components/display-mode-toggle";
-import { useRouter } from 'next/router'
-import Sidebar from '@/components/sidebar'
+import Navbar, { DesktopNavbarStyleType } from '@/modules/Navbar'
 import HomeModule from '@/modules/Home'
 import AboutModule from '@/modules/About'
 import BlogModule from '@/modules/Blog'
 import ContactModule from '@/modules/Contact'
 import { getSiteContext } from "@/lib/general-utils";
 import { ISiteContext } from "@/interfaces";
-import LanguageToggle from "@/components/language-toggle";
+import { LanguageCode, Namespaces } from '@/localization/enums'
+import { getPageContent } from '@/services/page-service'
 
-const Page = () => {
-  const context: ISiteContext = getSiteContext()
+const Page = async() => {
+  const context: ISiteContext =  getSiteContext()
+  const locale = context.locale as LanguageCode
+  // Main Modules that will be on the navigation bar
+  const navigationModules: Namespaces[] = [
+    Namespaces.HOME,
+    Namespaces.ABOUT,
+    Namespaces.BLOG,
+    Namespaces.CONTACT,
+  ]
+  // Array of modules to show on this page
+  const modulesToShow: Namespaces[] = [
+    Namespaces.HOME,
+    Namespaces.ABOUT,
+    Namespaces.BLOG,
+    Namespaces.CONTACT,
+  ]
+  // Map each namespace from Namespaces[] to its respective component
+  const componentMap: { [key in Namespaces]: React.ComponentType<any> } = {
+    [Namespaces.HOME]: HomeModule,
+    [Namespaces.ABOUT]: AboutModule,
+    [Namespaces.BLOG]: BlogModule,
+    [Namespaces.CONTACT]: ContactModule,
+    [Namespaces.NAVBAR]: Navbar,
+  };
+  // Fetch content for required modules
+  const content = await getPageContent(locale, modulesToShow.concat(Namespaces.NAVBAR));
+  const desktopNavbarStyle: DesktopNavbarStyleType = {isSidebar: true}
 
   return (
-    <div className="flex flex-col lg:flex-row">
-      {/* Sidebar */}
-      <aside className="w-full lg:w-1/4 p-4 bg-gray-50 dark:bg-gray-900 flex flex-col gap-1">
-        <Sidebar context={context} />
-        <DisplayModeToggle />
-        <LanguageToggle context={context} />
-      </aside>
-
+    <div className={`w-full flex ${desktopNavbarStyle.isSidebar ? "flex-row" : "flex-col"}`}>
+      {/* Navbar */}
+      <Navbar context={context} content={content[Namespaces.NAVBAR]} desktopNavbarStyle={desktopNavbarStyle} navigationModules={navigationModules} />
       {/* Main Content */}
-      <main className="flex-1 p-8 space-y-16">
-        {/* Home Section */}
-        <section id="home">
-          <HomeModule context={context} />
-        </section>
-
-        {/* About Section */}
-        <section id="about" className="pt-16">
-          <AboutModule context={context} />
-        </section>
-
-        {/* Blog Section */}
-        <section id="blog" className="pt-16">
-          <BlogModule context={context} />
-        </section>
-
-        {/* Contact Section */}
-        <section id="contact" className="pt-16">
-          <ContactModule context={context} />
-        </section>
+      <main className={`${desktopNavbarStyle.isSidebar ? "lg:max-w-[calc(100vw-200px)] lg:right-0 lg:absolute" : ""} w-full flex-1 space-y-16`}>
+        {/* Dynamically render the Module Section */}
+        {modulesToShow.map((namespace: Namespaces) => {
+          const ModuleComponent = componentMap[namespace];
+          return (
+            <ModuleComponent context={context} content={content[namespace]} id={namespace}/>
+          )
+        })}
       </main>
     </div>
   )
