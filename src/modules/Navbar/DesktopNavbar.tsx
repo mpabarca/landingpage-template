@@ -17,8 +17,8 @@ interface DesktopNavbarProps {
 
 const DesktopNavbar = ({ context, content, style, navigationModules }: DesktopNavbarProps) => {
   const mainStyle: React.CSSProperties = style.isSidebar
-  ? { width: style.size, minWidth: "200px" } 
-  : { height: style.size, minHeight: "100px" }
+  ? { width: "200px" } 
+  : { height: "100px" }
 
   const navStyle = `
     flex justify-between gap-2 bg-gray-50 dark:bg-gray-900

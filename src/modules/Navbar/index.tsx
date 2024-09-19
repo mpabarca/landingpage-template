@@ -17,7 +17,6 @@ export interface INavbarModuleData {
 
 export interface DesktopNavbarStyleType {
   isSidebar: boolean;
-  size: string;
 }
 
 interface NavbarModuleProps {

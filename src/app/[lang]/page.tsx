@@ -35,18 +35,14 @@ const Page = async() => {
   };
   // Fetch content for required modules
   const content = await getPageContent(locale, modulesToShow.concat(Namespaces.NAVBAR));
-  const desktopNavbarStyle: DesktopNavbarStyleType = {isSidebar: true, size: "50px"}
-  // Check the navigation bar's minimum width or height. If navbarStyle.size is smaller than the minimum, it will be overridden.
-  const mainStyle: React.CSSProperties = desktopNavbarStyle.isSidebar
-  ? { maxWidth: "calc(100% - 200px)", right: 0, position: "absolute" } 
-  : {}
-  
+  const desktopNavbarStyle: DesktopNavbarStyleType = {isSidebar: true}
+
   return (
     <div className={`w-full flex ${desktopNavbarStyle.isSidebar ? "flex-row" : "flex-col"}`}>
       {/* Navbar */}
       <Navbar context={context} content={content[Namespaces.NAVBAR]} desktopNavbarStyle={desktopNavbarStyle} navigationModules={navigationModules} />
       {/* Main Content */}
-      <main className="flex-1 space-y-16 w-full" style={mainStyle}>
+      <main className={`${desktopNavbarStyle.isSidebar ? "lg:max-w-[calc(100vw-200px)] lg:right-0 lg:absolute" : ""} w-full flex-1 space-y-16`}>
         {/* Dynamically render the Module Section */}
         {modulesToShow.map((namespace: Namespaces) => {
           const ModuleComponent = componentMap[namespace];

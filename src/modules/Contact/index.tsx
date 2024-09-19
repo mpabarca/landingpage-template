@@ -16,7 +16,7 @@ interface ContactModuleProps {
 
 const ContactModule = ({ id, context, content }: ContactModuleProps) => {
   return (
-    <section id={id} className="w-full h-screen p-8 flex flex-col items-start justify-center bg-gray-100">
+    <section id={id} className="w-full h-screen p-8 flex flex-col items-start justify-center bg-gray-100 dark:bg-gray-500">
       <h1>{content.title}</h1>
       <p>{content.intro}</p>
     </section>
