@@ -9,7 +9,7 @@ import { LanguageCode, Namespaces } from '@/localization/enums'
 import { getPageContent } from '@/services/page-service'
 
 const Page = async() => {
-  const context: ISiteContext =  getSiteContext()
+  const context: ISiteContext = await getSiteContext()
   const locale = context.locale as LanguageCode
   // Main Modules that will be on the navigation bar
   const navigationModules: Namespaces[] = [

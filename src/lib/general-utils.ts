@@ -3,8 +3,9 @@ import { ISiteContext } from "@/interfaces";
 import { LanguageCode } from "@/localization/enums";
 import { headers } from "next/headers"
 
-export const getSiteContext = (): ISiteContext => {
-  const header = headers();
+export const getSiteContext = async (): Promise<ISiteContext> => {
+  const header = await headers()
+
   const selectedLocale = header.get("x-selected-locale") || LanguageCode.en
   console.log('selectedLocale', selectedLocale)
 
