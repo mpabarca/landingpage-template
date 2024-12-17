@@ -47,7 +47,7 @@ const Page = async() => {
         {modulesToShow.map((namespace: Namespaces) => {
           const ModuleComponent = componentMap[namespace];
           return (
-            <ModuleComponent context={context} content={content[namespace]} id={namespace}/>
+            <ModuleComponent key={namespace} context={context} content={content[namespace]} id={namespace}/>
           )
         })}
       </main>
