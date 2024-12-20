@@ -5,8 +5,8 @@ export enum CustomHeaders {
 }
 
 export enum BooleanString {
-  yes = "YES",
-  no = "FALSE"
+  yes = "yes",
+  no = "false"
 }
 
 export enum Link {
