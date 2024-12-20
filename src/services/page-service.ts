@@ -9,14 +9,11 @@ export async function getPageContent(
   locale: LanguageCode,
   namespaces: Namespaces[]
 ): Promise<PageContent> {
-  const content: PageContent = {};
+  const validNamespaces = namespaces.filter((ns) => Object.values(Namespaces).includes(ns as Namespaces));
 
-  // Fetch translations for each namespace
-  await Promise.all(
-    namespaces.map(async (namespace) => {
-      content[namespace] = await getTranslation(locale, namespace);
-    })
-  );
-
+  const content: Record<string, any> = {};
+  for (const namespace of validNamespaces) {
+    content[namespace] = await getTranslation(locale, namespace as Namespaces);
+  }
   return content;
 }
